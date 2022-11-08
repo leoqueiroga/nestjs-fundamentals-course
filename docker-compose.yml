@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres-server
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: iluvcoffee
+    ports:
+      - "5432:5432"
+    networks:
+      - iluvcoffee-network
+
+  api:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    image: iluvcoffee/api
+    container_name: iluvcoffee-api
+    entrypoint: yarn start:dev
+    environment:
+      DATABASE_HOST: postgres-server
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: iluvcoffee
+      DATABASE_SCHEMA: public
+      DATABASE_SYNCHRONIZE: "true"
+    volumes:
+      - './:/usr/src/app'
+    ports:
+      - '3000:3000'
+    networks:
+      - iluvcoffee-network
+    depends_on:
+      - 'db'
+
+networks:
+  iluvcoffee-network:
+    driver: bridge
