@@ -1,6 +1,7 @@
 import {
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
@@ -12,6 +13,7 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto'
 import { Coffee } from './entities/coffee.entity'
 import { Flavor } from './entities/flavor.entity'
 import { Event } from '../events/entities/event.entity'
+import { COFFEE_BRANDS } from './coffees.constants'
 
 @Injectable()
 export class CoffeesService {
@@ -20,7 +22,8 @@ export class CoffeesService {
     private readonly coffeesRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorsRepository: Repository<Flavor>,
-    private readonly dataSource: DataSource
+    private readonly dataSource: DataSource,
+    @Inject(COFFEE_BRANDS) coffeeBrands: string[]
   ) {}
 
   async findAll(paginationQuery: PaginationQueryDto) {
