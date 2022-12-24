@@ -11,6 +11,7 @@ import {
   Query,
   SetMetadata,
 } from '@nestjs/common'
+import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Console } from 'console'
 import { resolve } from 'path'
 import { Protocol } from '../common/decorators/protocol.decorator'
@@ -21,10 +22,12 @@ import { CoffeesService } from './coffees.service'
 import { CreateCoffeeDto } from './dto/create-coffee.dto'
 import { UpdateCoffeeDto } from './dto/update-coffee.dto'
 
+@ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Public()
   @Get()
   async findAll(

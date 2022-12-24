@@ -15,6 +15,18 @@ services:
     networks:
       - iluvcoffee-network
 
+  test-db:
+    image: postgres
+    container_name: postgres-testing-server
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: iluvcoffee
+    ports:
+      - "5433:5432"
+    networks:
+      - iluvcoffee-network
+
   api:
     build:
       dockerfile: ./Dockerfile

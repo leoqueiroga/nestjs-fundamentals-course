@@ -24,13 +24,8 @@ export class CoffeesService {
     private readonly coffeesRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorsRepository: Repository<Flavor>,
-    private readonly dataSource: DataSource,
-    @Inject(COFFEE_BRANDS) coffeeBrands: string[],
-    @Inject(coffeesConfig.KEY)
-    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>
-  ) {
-    console.log('coffeesconfig', coffeesConfiguration.foo)
-  }
+    private readonly dataSource: DataSource
+  ) {}
 
   async findAll(paginationQuery: PaginationQueryDto) {
     const { limit, offset } = paginationQuery
