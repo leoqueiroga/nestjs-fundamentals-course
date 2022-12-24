@@ -2,8 +2,6 @@ import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
-import { HttpExceptionFilter } from './common/filters/http-exception.filter'
-import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -17,8 +15,8 @@ async function bootstrap() {
       },
     })
   )
-  app.useGlobalFilters(new HttpExceptionFilter())
-  app.useGlobalInterceptors(new TimeoutInterceptor())
+  //app.useGlobalFilters(new HttpExceptionFilter())
+  //app.useGlobalInterceptors(new TimeoutInterceptor())
   const options = new DocumentBuilder()
     .setTitle('NestJS API - Fundamentals Course')
     .setDescription('The NestJS API description')

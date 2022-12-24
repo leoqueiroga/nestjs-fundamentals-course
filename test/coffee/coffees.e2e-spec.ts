@@ -10,8 +10,6 @@ import * as request from 'supertest'
 import { CoffeesModule } from '../../src/coffees/coffees.module'
 import { CreateCoffeeDto } from '../../src/coffees/dto/create-coffee.dto'
 import { UpdateCoffeeDto } from '../../src/coffees/dto/update-coffee.dto'
-import { HttpExceptionFilter } from '../../src/common/filters/http-exception.filter'
-import { TimeoutInterceptor } from '../../src/common/interceptors/timeout.interceptor'
 
 describe('[Feature] Coffees - /coffees', () => {
   const coffee = {
@@ -58,8 +56,6 @@ describe('[Feature] Coffees - /coffees', () => {
         },
       })
     )
-    app.useGlobalFilters(new HttpExceptionFilter())
-    app.useGlobalInterceptors(new TimeoutInterceptor())
 
     await app.init()
     httpServer = app.getHttpServer()
